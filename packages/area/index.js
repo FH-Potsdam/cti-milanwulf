@@ -8,14 +8,16 @@ let x = 0;
 let canvas = undefined;
 const step = 25;
 const areas = [];
+
 function setup() {
-  canvas = createCanvas(100, 100);
-  canvas.parent("sketch");
+  canvas = createCanvas(500, 500);
+  canvas.parent("sketch"); 
   for (let x = 0; x < width; x += step) {
     for (let y = 0; y < height; y += step) {
       areas.push(new Area(x, y, step, step));
     }
   }
+  console.log(areas)
   noStroke();
 }
 
@@ -34,9 +36,10 @@ function Area(x, y, w, h) {
   }
   this.x = x;
   this.y = y;
-  this.w = w;
-  this.h = h;
+  this.w = x; //width of the orange cube
+  this.h = y; //height of the orange cube
   this.isOver = false;
+
 
   this.update = function(mX, mY) {
     if (
@@ -53,9 +56,12 @@ function Area(x, y, w, h) {
 
   this.display = function() {
     if (this.isOver === true) {
+/*       this.x = this.x+2
+      this.y = this.y+2 */
       fill("#ff6347");
+      
     } else {
-      fill("#00ff00");
+      fill("#ffffff");
     }
     rect(this.x, this.y, this.w, this.h);
   };

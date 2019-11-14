@@ -7,14 +7,18 @@
 let canvas = undefined;
 let jim = undefined;
 const agents = [];
+const lifespanlimit = 50;
+
 function setup() {
-  canvas = createCanvas(100, 100);
+  canvas = createCanvas(500, 500);
   canvas.parent("sketch");
   jim = new Agent(random(width), random(height));
   // Agent().display(); will throw an error
 }
 
 function draw() {
+  fill(150,50);
+  rect(0, 0, width, height);
   jim.update();
   jim.display();
   for (const item of agents) {
@@ -55,6 +59,7 @@ function Agent(x, y) {
 
   this.x = x;
   this.y = y;
+  this.lifespan = 0;
 
   /**
    * If you want the fancy noise driven movement remove
@@ -63,6 +68,11 @@ function Agent(x, y) {
   this.update = function() {
     this.x = this.x + random(-1, 1);
     this.y = this.y + random(-1, 1);
+    this.lifespan += 1;
+
+    if(this.lifespan>lifespanlimit){
+      this.x = -100;
+    }
     // constrain him to the canvas
   };
 
@@ -93,9 +103,9 @@ function Agent(x, y) {
   // };
 
   this.display = function() {
-    strokeWeight(2);
+    strokeWeight(5);
     stroke(0);
     fill(255);
-    ellipse(this.x, this.y, 5);
+    ellipse(this.x, this.y, 40);
   };
 }
